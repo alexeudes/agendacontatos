@@ -1,0 +1,30 @@
+<script setup lang="ts">
+import Toolbar from 'primevue/toolbar'
+import Button from 'primevue/button'
+import IconField from 'primevue/iconfield'
+import InputIcon from 'primevue/inputicon'
+import InputText from 'primevue/inputtext'
+</script>
+
+<template>
+  <Toolbar class="mb-4">
+    <template #start>
+      <Button
+        label="Novo contato"
+        icon="pi pi-plus"
+        severity="success"
+        class="mr-2"
+        @click="$emit('novoContato')"
+      />
+    </template>
+
+    <template #end>
+      <IconField iconPosition="left">
+        <InputIcon>
+          <i class="pi pi-search" />
+        </InputIcon>
+        <InputText placeholder="Buscar..." />
+      </IconField>
+    </template>
+  </Toolbar>
+</template>
