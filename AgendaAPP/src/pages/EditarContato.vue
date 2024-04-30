@@ -1,7 +1,6 @@
 <template>
   <Toast />
   <header>
-    <h3>Editar contato</h3>
     <Button
       type="button"
       label="Voltar"
@@ -12,59 +11,62 @@
       raised
     />
   </header>
-  <form>
-    <div class="flex align-items-center gap-4 mb-4">
-      <InputGroup>
-        <InputGroupAddon>
-          <i class="pi pi-user"></i>
-        </InputGroupAddon>
-        <InputText
-          v-model="state.contato.nome"
-          id="nome"
-          class="flex-auto"
-          autocomplete="off"
-          placeholder="Informe o nome"
-        />
-      </InputGroup>
+  <form class="p-card p-shadow-4">
+    <h3>Editar contato</h3>
+    <div class="p-card-body">
+      <div class="p-fluid p-formgrid p-grid">
+        <InputGroup>
+          <InputGroupAddon>
+            <i class="pi pi-user"></i>
+          </InputGroupAddon>
+          <InputText
+            v-model="state.contato.nome"
+            id="nome"
+            class="flex-auto"
+            autocomplete="off"
+            placeholder="Informe o nome"
+          />
+        </InputGroup>
+      </div>
+      <div class="p-fluid p-formgrid p-grid">
+        <InputGroup>
+          <InputGroupAddon>
+            <i class="pi pi-inbox"></i>
+          </InputGroupAddon>
+          <InputText
+            v-model="state.contato.email"
+            id="email"
+            class="flex-auto"
+            autocomplete="off"
+            placeholder="email@email.com"
+          />
+        </InputGroup>
+      </div>
+      <div class="p-fluid p-formgrid p-grid">
+        <InputGroup>
+          <InputGroupAddon>
+            <i class="pi pi-phone"></i>
+          </InputGroupAddon>
+          <InputMask
+            v-model="state.contato.telefone"
+            id="telefone"
+            mask="(99) 99999-9999"
+            placeholder="(99) 99999-9999"
+            class="flex-auto"
+            autocomplete="off"
+          />
+        </InputGroup>
+      </div>
+      <Button
+        type="button"
+        label="Atualizar"
+        icon="pi pi-save"
+        severity="primary"
+        class="mr-2"
+        @click="atualizarContato"
+        raised
+      />
     </div>
-    <div class="flex align-items-center gap-4 mb-4">
-      <InputGroup>
-        <InputGroupAddon>
-          <i class="pi pi-inbox"></i>
-        </InputGroupAddon>
-        <InputText
-          v-model="state.contato.email"
-          id="email"
-          class="flex-auto"
-          autocomplete="off"
-          placeholder="email@email.com"
-        />
-      </InputGroup>
-    </div>
-    <div class="flex align-items-center gap-4 mb-4">
-      <InputGroup>
-        <InputGroupAddon>
-          <i class="pi pi-phone"></i>
-        </InputGroupAddon>
-        <InputMask
-          v-model="state.contato.telefone"
-          id="telefone"
-          mask="(99) 99999-9999"
-          placeholder="(99) 99999-9999"
-          class="flex-auto"
-          autocomplete="off"
-        />
-      </InputGroup>
-    </div>
-    <Button
-      type="button"
-      label="Atualizar"
-      icon="pi pi-save"
-      severity="primary"
-      class="mr-2"
-      @click="atualizarContato"
-      raised
-    />
   </form>
 </template>
 <script lang="ts">
@@ -165,4 +167,19 @@ export default {
   }
 }
 </script>
-<style scoped></style>
+<style scoped>
+.p-card {
+  width: 500px;
+  margin: auto;
+}
+
+.p-card-body {
+  padding: 1rem;
+}
+
+form h3 {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+</style>

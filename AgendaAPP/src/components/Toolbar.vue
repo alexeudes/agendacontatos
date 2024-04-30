@@ -8,7 +8,7 @@ import InputText from 'primevue/inputtext'
 const props = defineProps({
   searchText: {
     type: String,
-    required: true
+    required: false
   }
 })
 </script>

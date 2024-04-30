@@ -1,45 +1,57 @@
 <template>
   <Toast />
-  <Toolbar :searchText="state.searchText"></Toolbar>
-  <IconField iconPosition="left">
-    <InputIcon>
-      <i class="pi pi-search" />
-    </InputIcon>
-    <InputText v-model="state.searchText" placeholder="Buscar..." />
-  </IconField>
-  <DataTable :value="state.contatos" :rows="15" tableStyle="min-width: 50rem">
-    <template #header>
-      <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
-        <h4 class="m-0">Meus Contatos</h4>
-      </div>
-    </template>
+  <div>
+    <div class="card">
+      <Toolbar />
+      <DataTable
+        :filters="filters"
+        :value="state.contatos"
+        :rows="15"
+        dataKey="id"
+        tableStyle="min-width: 50rem"
+        filterDisplay="menu"
+        :globalFilterFields="['nome']"
+      >
+        <template #header>
+          <div class="flex flex-wrap align-items-center justify-content-between">
+            <h4 class="m-0">Meus Contatos</h4>
+            <IconField iconPosition="left">
+              <InputIcon>
+                <i class="pi pi-search" />
+              </InputIcon>
+              <InputText placeholder="Buscar..." />
+            </IconField>
+          </div>
+        </template>
 
-    <Column
-      v-for="col of state.columns"
-      :key="col.field"
-      :field="col.field"
-      :header="col.header"
-      :style="col.style"
-    ></Column>
-    <Column :exportable="false" style="min-width: 8rem">
-      <template #body="slotProps">
-        <Button
-          icon="pi pi-pencil"
-          outlined
-          rounded
-          class="mr-2"
-          @click="editarContato(slotProps.data)"
-        />
-        <Button
-          icon="pi pi-trash"
-          outlined
-          rounded
-          severity="danger"
-          @click="showModalExclusao(slotProps.data)"
-        />
-      </template>
-    </Column>
-  </DataTable>
+        <Column
+          v-for="col of state.columns"
+          :key="col.field"
+          :field="col.field"
+          :header="col.header"
+          :style="col.style"
+        ></Column>
+        <Column :exportable="false" style="min-width: 8rem">
+          <template #body="slotProps">
+            <Button
+              icon="pi pi-pencil"
+              outlined
+              rounded
+              class="mr-2"
+              @click="editarContato(slotProps.data)"
+            />
+            <Button
+              icon="pi pi-trash"
+              outlined
+              rounded
+              severity="danger"
+              @click="showModalExclusao(slotProps.data)"
+            />
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+  </div>
 
   <DialogModal
     :visible="dialogExclusaoVisible"
@@ -49,12 +61,13 @@
 </template>
 
 <script lang="ts">
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import Toolbar from './Toolbar.vue'
 import DialogModal from './DialogModal.vue'
 import type { Contato } from '@/models/Contato'
 import { agendaService } from '@/services/agendaservice'
 import { useToast } from 'primevue/usetoast'
+import { FilterMatchMode, FilterOperator } from 'primevue/api'
 
 export default {
   props: ['items', ''],
@@ -91,10 +104,22 @@ export default {
     })
 
     const toast = useToast()
+    const filters = ref()
 
     onMounted(() => {
       getContatos()
     })
+
+    function initFilters() {
+      filters.value = {
+        nome: {
+          operator: FilterOperator.AND,
+          constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }]
+        }
+      }
+    }
+
+    initFilters()
 
     function getContatos(isDelete: boolean = false) {
       agendaService
@@ -121,7 +146,8 @@ export default {
     return {
       state,
       getContatos,
-      toast
+      toast,
+      filters
     }
   },
   data() {
@@ -174,3 +200,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+.card {
+  background: var(--surface-card);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+</style>

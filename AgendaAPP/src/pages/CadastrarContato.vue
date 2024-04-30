@@ -2,7 +2,6 @@
   <Toast />
   <main>
     <header>
-      <h3>Cadastrar contato</h3>
       <Button
         type="button"
         label="Voltar"
@@ -13,59 +12,62 @@
         raised
       />
     </header>
-    <form>
-      <div class="flex align-items-center gap-4 mb-4">
-        <InputGroup>
-          <InputGroupAddon>
-            <i class="pi pi-user"></i>
-          </InputGroupAddon>
-          <InputText
-            v-model="state.contato.nome"
-            id="nome"
-            class="flex-auto"
-            autocomplete="off"
-            placeholder="Informe o nome"
-          />
-        </InputGroup>
+    <form class="p-card p-shadow-4">
+      <h3>Cadastrar contato</h3>
+      <div class="p-card-body">
+        <div class="p-fluid p-formgrid p-grid">
+          <InputGroup class="p-field p-col">
+            <InputGroupAddon>
+              <i class="pi pi-user"></i>
+            </InputGroupAddon>
+            <InputText
+              v-model="state.contato.nome"
+              id="nome"
+              class="flex-auto"
+              autocomplete="off"
+              placeholder="Informe o nome"
+            />
+          </InputGroup>
+        </div>
+        <div class="p-fluid p-formgrid p-grid">
+          <InputGroup class="p-field p-col">
+            <InputGroupAddon>
+              <i class="pi pi-inbox"></i>
+            </InputGroupAddon>
+            <InputText
+              v-model="state.contato.email"
+              id="email"
+              class="flex-auto"
+              autocomplete="off"
+              placeholder="email@email.com"
+            />
+          </InputGroup>
+        </div>
+        <div class="p-fluid p-formgrid p-grid">
+          <InputGroup class="p-field p-col">
+            <InputGroupAddon>
+              <i class="pi pi-phone"></i>
+            </InputGroupAddon>
+            <InputMask
+              v-model="state.contato.telefone"
+              id="telefone"
+              mask="(99) 99999-9999"
+              placeholder="(99) 99999-9999"
+              class="flex-auto"
+              autocomplete="off"
+            />
+          </InputGroup>
+        </div>
+        <Button
+          type="button"
+          label="Salvar"
+          icon="pi pi-save"
+          severity="primary"
+          class="mr-2"
+          @click="salvarContato"
+          raised
+        />
       </div>
-      <div class="flex align-items-center gap-4 mb-4">
-        <InputGroup>
-          <InputGroupAddon>
-            <i class="pi pi-inbox"></i>
-          </InputGroupAddon>
-          <InputText
-            v-model="state.contato.email"
-            id="email"
-            class="flex-auto"
-            autocomplete="off"
-            placeholder="email@email.com"
-          />
-        </InputGroup>
-      </div>
-      <div class="flex align-items-center gap-4 mb-4">
-        <InputGroup>
-          <InputGroupAddon>
-            <i class="pi pi-phone"></i>
-          </InputGroupAddon>
-          <InputMask
-            v-model="state.contato.telefone"
-            id="telefone"
-            mask="(99) 99999-9999"
-            placeholder="(99) 99999-9999"
-            class="flex-auto"
-            autocomplete="off"
-          />
-        </InputGroup>
-      </div>
-      <Button
-        type="button"
-        label="Salvar"
-        icon="pi pi-save"
-        severity="primary"
-        class="mr-2"
-        @click="salvarContato"
-        raised
-      />
     </form>
   </main>
 </template>
@@ -173,48 +175,18 @@ export default {
 }
 </script>
 <style scoped>
-/*
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+.p-card {
+  width: 500px;
+  margin: auto;
 }
 
-header {
-  width: 100%;
-  max-width: calc(800px * 0.9);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: left;
+.p-card-body {
+  padding: 1rem;
 }
 
-main {
-  width: 100%;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
+form h3 {
   align-items: center;
   justify-content: center;
-  gap: 20px;
-}
-
-main h1 {
-  font-size: 1.6rem;
-}
-
-form {
   display: flex;
-  flex-direction: column;
-  width: 90%;
-  max-width: calc(800px * 0.9);
-  gap: 8px;
 }
-
- .container {
-  width: 440px;
-  padding: 40px 32px;
-  border-radius: 8px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
-} */
 </style>
