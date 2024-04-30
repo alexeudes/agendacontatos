@@ -27,7 +27,7 @@ public class AgendaController : ControllerBase
     }
 
     [HttpGet("{nome}")]
-    public async Task<IActionResult> GetById(string nome)
+    public async Task<IActionResult> GetByName(string nome)
     {
         var contato = await _agendaService.GetByName(nome);
 
@@ -35,6 +35,13 @@ public class AgendaController : ControllerBase
             return Ok(contato);
 
         return Ok($"Não há nenhum contato cadastrado com o nome: {nome}.");
+    }
+
+    [HttpGet("GetById/{id}")]
+    public async Task<IActionResult> GetById(string id)
+    {
+        var contato = await _agendaService.GetById(id);
+        return Ok(contato);
     }
 
     [HttpPost]

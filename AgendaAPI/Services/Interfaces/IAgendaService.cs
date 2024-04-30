@@ -6,9 +6,10 @@ namespace AgendaAPI.Services.Interfaces
 	{
         Task<IEnumerable<ContatoDTO>> GetAll();
         Task<IEnumerable<ContatoDTO>> GetByName(string nome);
+        Task<ContatoDTO> GetById(string id);
         Task<bool> Create(ContatoDTO contato);
         Task<bool> Update(ContatoDTO contato);
-        Task<Boolean> Delete(int id);
+        Task<bool> Delete(int id);
     }
 }
 

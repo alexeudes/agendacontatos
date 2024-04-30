@@ -1,0 +1,35 @@
+﻿<Properties StartupConfiguration="{0D83B44E-17AA-493F-9A02-60195D84A961}|Default">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.AgendaAPI PreferredExecutionTarget="/Applications/Arc.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/AgendaController.cs">
+    <Files>
+      <File FileName="Controllers/AgendaController.cs" Line="38" Column="6" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AgendaAPI">
+            <Node name="AgendaAPI">
+              <Node name="Controllers" expanded="True">
+                <Node name="AgendaController.cs" selected="True" />
+              </Node>
+              <Node name="Data" expanded="True">
+                <Node name="Repositories" expanded="True">
+                  <Node name="Interfaces" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Services" expanded="True">
+                <Node name="Interfaces" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+</Properties>

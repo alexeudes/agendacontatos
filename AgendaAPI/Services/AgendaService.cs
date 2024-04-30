@@ -52,6 +52,12 @@ namespace AgendaAPI.Services
             return contatos.Select(_mapper.Map<ContatoDTO>);
         }
 
+        public async Task<ContatoDTO> GetById(string id)
+        {
+            var contato = await _agendaRepository.GetById(Convert.ToInt32(id));
+            return _mapper.Map<ContatoDTO>(contato);
+        }
+
         public async Task<bool> Update(ContatoDTO contato)
         {
             var contatoSearched = _agendaRepository.GetById(contato.ID).Result;
