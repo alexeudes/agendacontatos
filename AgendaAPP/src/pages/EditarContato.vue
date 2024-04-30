@@ -93,7 +93,7 @@ export default {
     const v$ = useVuelidate(validacoes, state.contato)
 
     onMounted(() => {
-      getContatoById(route.params.id)
+      getContatoById(+route.params.id)
     })
 
     function getContatoById(idContato: number) {

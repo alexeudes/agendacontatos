@@ -1,7 +1,12 @@
 <template>
   <Toast />
-  <Toolbar></Toolbar>
-
+  <Toolbar :searchText="state.searchText"></Toolbar>
+  <IconField iconPosition="left">
+    <InputIcon>
+      <i class="pi pi-search" />
+    </InputIcon>
+    <InputText v-model="state.searchText" placeholder="Buscar..." />
+  </IconField>
   <DataTable :value="state.contatos" :rows="15" tableStyle="min-width: 50rem">
     <template #header>
       <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
@@ -81,7 +86,8 @@ export default {
           style: 'min-width: 10rem'
         }
       ],
-      contatos: []
+      contatos: [] as Contato[],
+      searchText: ''
     })
 
     const toast = useToast()
@@ -155,6 +161,14 @@ export default {
         setTimeout(() => {
           this.getContatos(true)
         }, 2000)
+      })
+    }
+  },
+  computed: {
+    filterContatos() {
+      const normalizedSearch = this.state.searchText.toLowerCase().trim()
+      return this.state.contatos.filter((contato) => {
+        contato.nome.toLocaleLowerCase().includes(normalizedSearch)
       })
     }
   }

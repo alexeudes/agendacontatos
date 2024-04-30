@@ -4,6 +4,13 @@ import Button from 'primevue/button'
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
 import InputText from 'primevue/inputtext'
+
+const props = defineProps({
+  searchText: {
+    type: String,
+    required: true
+  }
+})
 </script>
 
 <template>
@@ -18,13 +25,13 @@ import InputText from 'primevue/inputtext'
       />
     </template>
 
-    <template #end>
+    <!-- <template #end>
       <IconField iconPosition="left">
         <InputIcon>
           <i class="pi pi-search" />
         </InputIcon>
-        <InputText placeholder="Buscar..." />
+        <InputText :v-model="searchText" placeholder="Buscar..." />
       </IconField>
-    </template>
+    </template> -->
   </Toolbar>
 </template>
