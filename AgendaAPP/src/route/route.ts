@@ -1,12 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import DataTable from '@/components/DataTable.vue'
+import Main from '../pages/Main.vue'
+import CadastrarContato from '@/pages/CadastrarContato.vue'
+import EditarContato from '@/pages/EditarContato.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: DataTable
+    component: Main
+  },
+  {
+    path: '/new',
+    name: 'cadastrar',
+    component: CadastrarContato
+  },
+  {
+    path: '/update/:id',
+    name: 'editar',
+    component: EditarContato
   }
 ]
 

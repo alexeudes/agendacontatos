@@ -8,10 +8,14 @@ import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
 import InputMask from 'primevue/inputmask'
-import Toast from 'primevue/toast'
+import InputGroup from 'primevue/inputgroup'
+import InputGroupAddon from 'primevue/inputgroupaddon'
+import FloatLabel from 'primevue/floatlabel'
 import ConfirmDialog from 'primevue/confirmdialog'
 import ToastService from 'primevue/toastservice'
+import Toast from 'primevue/toast'
 import ConfirmationService from 'primevue/confirmationservice'
+import Dialog from 'primevue/dialog'
 
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
@@ -28,7 +32,11 @@ app.component('Button', Button)
 app.component('Divider', Divider)
 app.component('InputText', InputText)
 app.component('InputMask', InputMask)
+app.component('InputGroup', InputGroup)
+app.component('InputGroupAddon', InputGroupAddon)
+app.component('FloatLabel', FloatLabel)
 app.component('Toast', Toast)
 app.component('ConfirmDialog', ConfirmDialog)
+app.component('Dialog', Dialog)
 app.component('DataTable', DataTable)
 app.component('Column', Column)

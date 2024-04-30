@@ -14,7 +14,7 @@ import InputText from 'primevue/inputtext'
         icon="pi pi-plus"
         severity="success"
         class="mr-2"
-        @click="$emit('novoContato')"
+        @click="$router.push('new')"
       />
     </template>
 

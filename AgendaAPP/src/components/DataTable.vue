@@ -1,7 +1,8 @@
 <template>
-  <Toolbar @novoContato="showModalCadastro"></Toolbar>
+  <Toast />
+  <Toolbar></Toolbar>
 
-  <DataTable :value="state.items" :rows="10" tableStyle="min-width: 50rem">
+  <DataTable :value="state.contatos" :rows="15" tableStyle="min-width: 50rem">
     <template #header>
       <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
         <h4 class="m-0">Meus Contatos</h4>
@@ -22,7 +23,7 @@
           outlined
           rounded
           class="mr-2"
-          @click="showModalEdicao(slotProps.data)"
+          @click="editarContato(slotProps.data)"
         />
         <Button
           icon="pi pi-trash"
@@ -36,40 +37,22 @@
   </DataTable>
 
   <DialogModal
-    :visible="dialogCadastroVisible"
-    :header="headerDialogCadastro"
-    :description="'Informe os dados de cadastro do usuário'"
-    :isExclusao="false"
-    @closeModal="closeModalCadastro"
-  ></DialogModal>
-
-  <DialogModal
-    :visible="dialogEdicaoVisible"
-    :header="headerDialogEdicao"
-    :description="'Atualize as informações do usuário'"
-    :isExclusao="false"
-    :objContato="state.contato"
-    @closeModal="closeModalEdicao"
-  ></DialogModal>
-
-  <DialogModal
     :visible="dialogExclusaoVisible"
-    :header="headerDialogExclusao"
-    :description="'Deseja mesmo excluir este contato?'"
-    :isExclusao="true"
-    :objContato="state.contato"
     @closeModal="closeModalExclusao"
-  ></DialogModal>
+    @excluirContato="excluirContato"
+  />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 import Toolbar from './Toolbar.vue'
 import DialogModal from './DialogModal.vue'
 import type { Contato } from '@/models/Contato'
+import { agendaService } from '@/services/agendaservice'
+import { useToast } from 'primevue/usetoast'
 
 export default {
-  props: ['items', 'contato'],
+  props: ['items', ''],
   components: {
     Toolbar,
     DialogModal
@@ -98,59 +81,81 @@ export default {
           style: 'min-width: 10rem'
         }
       ],
-      items: [
-        {
-          id: 1,
-          nome: 'Alex',
-          email: 'alex@gmail.com',
-          telefone: '99999-9999'
-        },
-        {
-          id: 2,
-          nome: 'Eudes',
-          email: 'eudes@gmail.com',
-          telefone: '98888-8888'
-        }
-      ],
-      contato: {} as Contato
+      contatos: []
     })
 
+    const toast = useToast()
+
+    onMounted(() => {
+      getContatos()
+    })
+
+    function getContatos(isDelete: boolean = false) {
+      agendaService
+        .get('/Agenda')
+        .then((res) => {
+          state.contatos = res.data
+          toast.add({
+            life: 4000,
+            severity: isDelete ? 'info' : 'success',
+            summary: 'Sucesso!',
+            detail: 'Contatos carregados com sucesso.'
+          })
+        })
+        .catch(() => {
+          toast.add({
+            life: 4000,
+            severity: 'error',
+            summary: 'Erro!',
+            detail: 'Não foi possível carregar a lista de contatos.'
+          })
+        })
+    }
+
     return {
-      state
+      state,
+      getContatos,
+      toast
     }
   },
   data() {
     return {
-      dialogCadastroVisible: false,
-      dialogEdicaoVisible: false,
       dialogExclusaoVisible: false,
-      headerDialogCadastro: 'Cadastrar contato',
-      headerDialogEdicao: 'Editar contato',
-      headerDialogExclusao: 'Excluir contato'
+      contatoSelecionado: {} as Contato
     }
   },
   methods: {
-    showModalCadastro() {
-      this.dialogCadastroVisible = true
-    },
-    closeModalCadastro() {
-      this.dialogCadastroVisible = false
-    },
-    showModalEdicao(contato: Contato) {
-      this.state.contato = contato
-      this.dialogEdicaoVisible = true
-    },
-    closeModalEdicao() {
-      this.state.contato = {} as Contato
-      this.dialogEdicaoVisible = false
-    },
     showModalExclusao(contato: Contato) {
-      this.state.contato = contato
+      this.contatoSelecionado = contato
       this.dialogExclusaoVisible = true
     },
     closeModalExclusao() {
-      this.state.contato = {} as Contato
       this.dialogExclusaoVisible = false
+    },
+    editarContato(contato: Contato) {
+      this.$router.push({ name: 'editar', params: { id: contato.id } })
+    },
+    excluirContato() {
+      if (this.contatoSelecionado != null) {
+        const contatoIndex = this.state.contatos.findIndex((c) => c == this.contatoSelecionado)
+        this.state.contatos.splice(contatoIndex, 1)
+        this.deletarContato(this.contatoSelecionado.id)
+      }
+      this.closeModalExclusao()
+    },
+    async deletarContato(idContato: number) {
+      agendaService.delete(`/Agenda/${idContato}`).then((res) => {
+        this.toast.add({
+          life: 4000,
+          severity: 'success',
+          summary: 'Sucesso!',
+          detail: 'Contatos excluído com sucesso.'
+        })
+
+        setTimeout(() => {
+          this.getContatos(true)
+        }, 2000)
+      })
     }
   }
 }
