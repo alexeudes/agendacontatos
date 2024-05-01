@@ -1,8 +1,10 @@
 ﻿using AgendaAPI.Data;
 using AgendaAPI.Data.Repositories;
 using AgendaAPI.Data.Repositories.Interfaces;
+using AgendaAPI.Mappers;
 using AgendaAPI.Services;
 using AgendaAPI.Services.Interfaces;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

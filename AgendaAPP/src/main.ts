@@ -17,6 +17,8 @@ import ToastService from 'primevue/toastservice'
 import Toast from 'primevue/toast'
 import ConfirmationService from 'primevue/confirmationservice'
 import Dialog from 'primevue/dialog'
+import IconField from 'primevue/iconfield'
+import InputIcon from 'primevue/inputicon'
 
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
@@ -35,6 +37,8 @@ app.component('InputText', InputText)
 app.component('InputMask', InputMask)
 app.component('InputGroup', InputGroup)
 app.component('InputGroupAddon', InputGroupAddon)
+app.component('IconField', IconField)
+app.component('InputIcon', InputIcon)
 app.component('FloatLabel', FloatLabel)
 app.component('Toast', Toast)
 app.component('ConfirmDialog', ConfirmDialog)

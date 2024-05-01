@@ -26,4 +26,10 @@
   <ItemGroup>
     <ProjectReference Include="..\AgendaAPI\AgendaAPI.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Mapper\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mapper\" />
+  </ItemGroup>
 </Project>

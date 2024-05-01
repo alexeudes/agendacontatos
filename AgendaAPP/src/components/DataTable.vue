@@ -3,23 +3,22 @@
   <div>
     <div class="card">
       <Toolbar />
+
       <DataTable
-        :filters="filters"
-        :value="state.contatos"
-        :rows="15"
+        :value="filterContatos"
+        :rows="10"
         dataKey="id"
         tableStyle="min-width: 50rem"
         filterDisplay="menu"
-        :globalFilterFields="['nome']"
       >
         <template #header>
           <div class="flex flex-wrap align-items-center justify-content-between">
-            <h4 class="m-0">Meus Contatos</h4>
+            <!-- <h4 class="m-0">Meus Contatos</h4> -->
             <IconField iconPosition="left">
               <InputIcon>
                 <i class="pi pi-search" />
               </InputIcon>
-              <InputText placeholder="Buscar..." />
+              <InputText v-model="state.searchText" placeholder="Buscar..." />
             </IconField>
           </div>
         </template>
@@ -31,7 +30,7 @@
           :header="col.header"
           :style="col.style"
         ></Column>
-        <Column :exportable="false" style="min-width: 8rem">
+        <Column header="Opções" :exportable="false" style="min-width: 8rem">
           <template #body="slotProps">
             <Button
               icon="pi pi-pencil"
@@ -67,7 +66,6 @@ import DialogModal from './DialogModal.vue'
 import type { Contato } from '@/models/Contato'
 import { agendaService } from '@/services/agendaservice'
 import { useToast } from 'primevue/usetoast'
-import { FilterMatchMode, FilterOperator } from 'primevue/api'
 
 export default {
   props: ['items', ''],
@@ -99,27 +97,15 @@ export default {
           style: 'min-width: 10rem'
         }
       ],
-      contatos: [] as Contato[],
+      contatos: ref([] as Contato[]),
       searchText: ''
     })
 
     const toast = useToast()
-    const filters = ref()
 
     onMounted(() => {
       getContatos()
     })
-
-    function initFilters() {
-      filters.value = {
-        nome: {
-          operator: FilterOperator.AND,
-          constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }]
-        }
-      }
-    }
-
-    initFilters()
 
     function getContatos(isDelete: boolean = false) {
       agendaService
@@ -146,8 +132,7 @@ export default {
     return {
       state,
       getContatos,
-      toast,
-      filters
+      toast
     }
   },
   data() {
@@ -194,7 +179,7 @@ export default {
     filterContatos() {
       const normalizedSearch = this.state.searchText.toLowerCase().trim()
       return this.state.contatos.filter((contato) => {
-        contato.nome.toLocaleLowerCase().includes(normalizedSearch)
+        return contato.nome.toLowerCase().includes(normalizedSearch)
       })
     }
   }
@@ -206,5 +191,11 @@ export default {
   padding: 2rem;
   border-radius: 10px;
   margin-bottom: 1rem;
+  font-weight: normal;
+  background: var(--surface-ground);
+  color: var(--text-color);
+  padding: 1rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>

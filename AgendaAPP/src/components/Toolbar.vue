@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import Toolbar from 'primevue/toolbar'
 import Button from 'primevue/button'
-import IconField from 'primevue/iconfield'
-import InputIcon from 'primevue/inputicon'
-import InputText from 'primevue/inputtext'
 
 const props = defineProps({
   searchText: {
@@ -16,13 +13,11 @@ const props = defineProps({
 <template>
   <Toolbar class="mb-4">
     <template #start>
-      <Button
-        label="Novo contato"
-        icon="pi pi-plus"
-        severity="success"
-        class="mr-2"
-        @click="$router.push('new')"
-      />
+      <Button label="Novo" icon="pi pi-plus" severity="success" @click="$router.push('new')" />
+    </template>
+
+    <template #center>
+      <h4 class="m-0">Meus Contatos</h4>
     </template>
 
     <!-- <template #end>
